@@ -3,6 +3,7 @@ import person1 from '../../../assets/images/people1.png'
 import person2 from '../../../assets/images/people2.png'
 import person3 from '../../../assets/images/people3.png'
 import Tastimonial from './Tastimonial';
+import testimon from '../../../assets/icons/quote.svg'
 const Tastimonialdata = () => {
     const testimonialdata=[
         {
@@ -29,8 +30,15 @@ const Tastimonialdata = () => {
     ]
     return (
         <div className='mt-20'>
+           <div className='flex justify-between'>
+            <div>
             <h5 className='text-2xl font-bold text-secondary'>Testimonial</h5>
             <h3 className='text-4xl font-bold'>What Our Patients Says</h3>
+            </div>
+            <div className=''>
+              <img src={testimon} className='w-40' alt="" />
+            </div>
+           </div>
             <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6 mt-64'>
               {
                 testimonialdata.map(testi => <Tastimonial
