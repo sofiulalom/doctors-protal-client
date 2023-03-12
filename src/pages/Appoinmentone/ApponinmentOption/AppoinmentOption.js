@@ -1,7 +1,7 @@
 import React from 'react';
 
-const AppoinmentOption = ({option}) => {
-    const {name, slots}=option;
+const AppoinmentOption = ({appoinmentoption, setTritMent}) => {
+    const {name, slots}=appoinmentoption;
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
@@ -9,7 +9,12 @@ const AppoinmentOption = ({option}) => {
             <p className='text-center'>{slots.length > 0 ? slots[0] : 'Try another day'}</p>
              <p className='text-center'>{slots.length} {slots.length > 1 ? 'spaces': 'space'} available </p>
             <div className="card-actions justify-center">
-            <button className="btn btn-primary text-center bg-gradient-to-r from-primary to-secondary">Book Appoinment </button>
+            <label
+              disabled={slots.length === 0}
+             htmlFor="booking-modal" 
+             className="btn btn-primary text-white text-center bg-gradient-to-r from-primary to-secondary"
+             onClick={()=> setTritMent (appoinmentoption)}
+             >Book Appoinment</label>
             </div>
         </div>
         </div>
