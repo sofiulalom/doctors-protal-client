@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import footer from '../../../assets/images/footer.png'
-import app from '../../../assets/images/footer.png'
+
+import app from '../../../assets/images/appointment.png'
 const Footer = () => {
     return (
-        <footer className="footer p-10  mt-28"  style={{ backgroundImage: `url(${app})` }} >
+        <footer className="footer m-auto p-28 text-white text-2xl mt-32"  style={{ backgroundImage: `url(${app})` }} >
         <div>
             <span className="footer-title">Services</span> 
             <Link to='/' className="link link-hover">Branding</Link>

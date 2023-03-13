@@ -7,6 +7,7 @@ const Nabver = () => {
     <li><Link to='/aappoinmentone'>Appoinment</Link></li>
     <li><Link to='/'>About us</Link></li>
     <li><Link to='/'>contact us</Link></li>
+    <li><Link to='/login'>Login</Link></li>
      
     </>
     return (
@@ -21,7 +22,7 @@ const Nabver = () => {
               
             </ul>
           </div>
-          <Link className='text-black text-2xl' to='/'>Doctors Protal</Link>
+          <Link className='text-primary font-bold text-2xl' to='/'>Doctors Protal</Link>
         </div>
         <div className="navbar-center hidden lg:flex justify-evenly">
           <ul className="menu menu-horizontal px-1 text-black">

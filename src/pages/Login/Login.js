@@ -1,0 +1,46 @@
+import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom';
+
+const Login = () => {
+    const { register,formState:{errors}, handleSubmit }=useForm();
+    const  [loginError, setLoginError]=useState();
+
+    const handleLogin=(data)=>{
+
+        console.log(data)
+        console.log(errors)
+    }
+    return (
+        <div className='w-4/12 m-auto p-5 mt-44 shadow-2xl'>
+            <div className=' '>
+                <h1 className='text-4xl text-center font-bold text-secondary'>Login</h1>
+                <form onSubmit={handleSubmit(handleLogin)}>
+               
+                
+                <div className="form-control w-full ">
+                <label className="label">
+                    <span className="label-text text-xl">Your Email</span>
+                </label>
+                    <input type="email" {...register("email", {required: "Email Address is required"})} placeholder="Your Email" className="input input-bordered w-full" />
+                    {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
+                <label className="label">
+                    <span className="label-text text-xl">password</span>
+                </label>
+                <input type="password" {...register("password", {required:true, })} placeholder="passwrd" className="input input-bordered w-full" />
+                {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
+                </div>
+                 <p><Link className='text-blue-700'>Forgate password</Link></p>
+                <input className="btn btn-accent mt-5 w-full font-bold" value='Submit' type="submit" />
+                <p className='text-xl'>New to Doctors Portal? <Link className='text-secondary ' to='/signup'>Create new Acount</Link></p>
+                <div className="flex flex-col w-full border-opacity-50">
+                <div className="divider">OR</div>
+                <button className='btn btn-outline text-xl'>CONTINUE WITH GOOGLE</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default Login;
