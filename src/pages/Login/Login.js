@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/Authprovider';
+import ContenewWithGoogle from '../SignUp/ContinewWithGoogle/ContenewWithGoogle';
 
 const Login = () => {
     const { register,formState:{errors}, handleSubmit }=useForm();
@@ -46,7 +47,7 @@ const Login = () => {
                 <p className='text-xl'>New to Doctors Portal? <Link className='text-secondary ' to='/signup'>Create new Acount</Link></p>
                 <div className="flex flex-col w-full border-opacity-50">
                 <div className="divider">OR</div>
-                <button className='btn btn-outline text-xl'>CONTINUE WITH GOOGLE</button>
+                <ContenewWithGoogle></ContenewWithGoogle>
                 </div>
                 </form>
             </div>
