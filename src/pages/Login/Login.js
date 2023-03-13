@@ -16,7 +16,10 @@ const Login = () => {
             const user=result.user;
             console.log(user)
          })
-         .catch(e => console.error(e))
+         .catch(e => {
+            console.error(e)
+            setLoginError(e.message)
+        })
     }
     return (
         <div className='w-4/12 m-auto p-5 mt-44 shadow-2xl'>
@@ -39,6 +42,7 @@ const Login = () => {
                 </div>
                  <p><Link className='text-blue-700'>Forgate password</Link></p>
                 <input className="btn btn-accent mt-5 w-full font-bold" value='Submit' type="submit" />
+                <p className='text-red-600'>{loginError} </p>
                 <p className='text-xl'>New to Doctors Portal? <Link className='text-secondary ' to='/signup'>Create new Acount</Link></p>
                 <div className="flex flex-col w-full border-opacity-50">
                 <div className="divider">OR</div>

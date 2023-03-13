@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useContext,  } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../AuthProvider/Authprovider';
 
 const Nabver = () => {
+    const { user,LogOut}=useContext(AuthContext);
+    const handleLogOut=()=>{
+          LogOut()
+          .then(()=> {})
+          .catch(e => console.log(e))
+    }
     const manuItems=<>
     <li><Link to='/'>Home</Link></li>
     <li><Link to='/aappoinmentone'>Appoinment</Link></li>
     <li><Link to='/'>About us</Link></li>
     <li><Link to='/'>contact us</Link></li>
-    <li><Link to='/login'>Login</Link></li>
+    { user?.uid?
+        
+        <button onClick={handleLogOut} className='btn btn-outline font-bold'>LogOut</button>
+
+        :
+
+        <li><Link to='/login'>Login</Link></li>}
      
     </>
     return (

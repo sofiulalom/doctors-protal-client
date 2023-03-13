@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/Authprovider';
@@ -6,6 +6,7 @@ import { AuthContext } from '../AuthProvider/Authprovider';
 const SignUp = () => {
     const {register,formState:{errors}, handleSubmit}=useForm();
     const { createSignUp}=useContext(AuthContext)
+    const  [loginError, setLoginError]=useState();
     const handleSignUp=data=>{
          console.log(data)
          createSignUp(data.email, data.password)
@@ -13,7 +14,11 @@ const SignUp = () => {
             const user=result.user;
             console.log(user)
          })
-         .catch(e => console.log(e))
+         .catch(e => {
+            console.log(e)
+            setLoginError(e.message)
+        
+        })
 
     }
     return (
@@ -39,6 +44,7 @@ const SignUp = () => {
             </div>
              
             <input className="btn btn-accent mt-5 w-full font-bold" value='Sign-Up' type="submit" />
+            <p className='text-red-600'>{loginError} </p>
             <p className='text-xl'>Allrady have an acount! <Link className='text-secondary ' to='/login'>you are Login know</Link></p>
             <div className="flex flex-col w-full border-opacity-50">
             <div className="divider">OR</div>
