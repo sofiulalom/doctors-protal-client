@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/Authprovider';
 import ContenewWithGoogle from '../SignUp/ContinewWithGoogle/ContenewWithGoogle';
 
@@ -8,7 +8,9 @@ const Login = () => {
     const { register,formState:{errors}, handleSubmit }=useForm();
     const {LoginUser}=useContext(AuthContext)
     const  [loginError, setLoginError]=useState();
-
+    const location=useLocation()
+    const navigate= useNavigate();
+    const from =location?.state?.from?.pathNmae || '/'
     const handleLogin=(data)=>{
 
         console.log(data)
@@ -16,6 +18,8 @@ const Login = () => {
          .then(result => {
             const user=result.user;
             console.log(user)
+            
+            navigate(from, {replace:true})
          })
          .catch(e => {
             console.error(e)

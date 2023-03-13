@@ -16,11 +16,17 @@ const Nabver = () => {
     <li><Link to='/'>contact us</Link></li>
     { user?.uid?
         
+        <>
+        
+        <li><Link to='/dhasebowrd'>DhaseBowrd</Link></li>
         <button onClick={handleLogOut} className='btn btn-outline font-bold'>LogOut</button>
-
+        </>
         :
-
-        <li><Link to='/login'>Login</Link></li>}
+        <>
+        <li><Link to='/login'>Login</Link></li>
+        </>
+        
+        }
      
     </>
     return (
