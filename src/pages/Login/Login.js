@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../AuthProvider/Authprovider';
 
 const Login = () => {
     const { register,formState:{errors}, handleSubmit }=useForm();
+    const {LoginUser}=useContext(AuthContext)
     const  [loginError, setLoginError]=useState();
 
     const handleLogin=(data)=>{
 
         console.log(data)
-        console.log(errors)
+         LoginUser(data.email, data.password)
+         .then(result => {
+            const user=result.user;
+            console.log(user)
+         })
+         .catch(e => console.error(e))
     }
     return (
         <div className='w-4/12 m-auto p-5 mt-44 shadow-2xl'>
