@@ -1,10 +1,10 @@
 import React, { createContext, useEffect, useState, } from 'react';
-import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut} from 'firebase/auth'
+import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile} from 'firebase/auth'
 import app from '../../firebase/firebase.config';
 export const AuthContext=createContext()
 const auth =getAuth(app)
 const Authprovider = ({children}) => {
-    const [user, setUser]=useState(null)
+    const [user, setUser]=useState()
     const [lowading, setLowading]=useState(true)
     const ContenewWithGoogle=(provider)=>{
         setLowading(true)
@@ -13,6 +13,9 @@ const Authprovider = ({children}) => {
     const createSignUp=(email, password)=>{
         setLowading(true)
        return createUserWithEmailAndPassword(auth, email, password)
+    }
+    const UpdataeuserProfiele=(userinfo)=>{
+        return updateProfile(auth.currentUser, userinfo)
     }
     const LoginUser=(email, password)=>{
         setLowading(true)
@@ -23,9 +26,9 @@ const Authprovider = ({children}) => {
     }
     
     useEffect(()=> {
-      const unSubscribe=  onAuthStateChanged(auth,  (currentUser)=> {
-            console.log(currentUser);
-            setUser(currentUser)
+      const unSubscribe=  onAuthStateChanged(auth,  (currentMengUser)=> {
+            console.log(currentMengUser);
+            setUser(currentMengUser)
             setLowading(false)
         })
         return ()=> unSubscribe()
@@ -34,6 +37,7 @@ const Authprovider = ({children}) => {
         user,
         ContenewWithGoogle,
         createSignUp,
+        UpdataeuserProfiele,
         LoginUser,
         LogOut,
         lowading,

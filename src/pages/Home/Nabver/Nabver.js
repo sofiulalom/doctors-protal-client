@@ -1,6 +1,7 @@
 import React, { useContext,  } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/Authprovider';
+import DarkMode from '../Home/darkMode/DarkMode';
 
 const Nabver = () => {
     const { user,LogOut}=useContext(AuthContext);
@@ -13,13 +14,14 @@ const Nabver = () => {
     <li><Link to='/'>Home</Link></li>
     <li><Link to='/aappoinmentone'>Appoinment</Link></li>
     <li><Link to='/'>About us</Link></li>
-    <li><Link to='/'>contact us</Link></li>
+    <li className='ml-2'><Link to='/'>contact us</Link></li>
     { user?.uid?
         
         <>
         
         <li><Link to='/dhasebowrd'>DhaseBowrd</Link></li>
         <button onClick={handleLogOut} className='btn btn-outline font-bold'>LogOut</button>
+      
         </>
         :
         <>
@@ -27,7 +29,8 @@ const Nabver = () => {
         </>
         
         }
-     
+        
+        
     </>
     return (
         <div className="navbar bg-white justify-between">

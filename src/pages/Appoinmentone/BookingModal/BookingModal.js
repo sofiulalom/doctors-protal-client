@@ -1,8 +1,10 @@
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/Authprovider';
 
-const BookingModal = ({tritment,selectedDate ,setTritMent}) => {
-    const {name ,slots}=tritment;
+const BookingModal = ({tritment,selectedDate ,setTritMent, refetch}) => {
+    const {user}=useContext(AuthContext)
+    const { name:tritmantName  ,slots}=tritment;
     const date =format(selectedDate, 'PP');
     const handleBooking=event=> {
          event.preventDefault();
@@ -13,15 +15,34 @@ const BookingModal = ({tritment,selectedDate ,setTritMent}) => {
          const phone =form.phone.value;
 
           const booking ={
-            selectedDate: date,
-            tritment: name,
+            appoinmentDate: date,
+            tritmantName: tritmantName,
             patient: name,
             email,
             slot,
             phone,
           }
+  
+
+         fetch('http://localhost:5000/bookings', {
+          method: 'POST',
+          headers:{
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(booking),
+
+         })
+         .then(res => res.json())
+        .then(data => {
+          console.log(data)
+        if(data.acknowledged === true){
+ 
           setTritMent(null)
-         console.log(booking);
+          alert('success confirmd')
+          refetch()
+        }
+        })
+         
     }
     return (
         <div>
@@ -29,7 +50,7 @@ const BookingModal = ({tritment,selectedDate ,setTritMent}) => {
         <div className="modal">
         <div className="modal-box relative">
             <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-        <h3 className="text-lg font-bold">{name}</h3>
+        <h3 className="text-lg font-bold">{tritmantName}</h3>
             <form onSubmit={handleBooking} className='mt-6 grid gap-6 grid-cols-1'>
             <input type="text" disabled value={date} className="input input-bordered w-full " />
             <select name='slot' className="select select-bordered w-full">
@@ -41,8 +62,8 @@ const BookingModal = ({tritment,selectedDate ,setTritMent}) => {
               >{slot}</option>)
             }
             </select>
-            <input name='name' type="text" placeholder="your Name" className="input input-bordered w-full " />
-            <input name='email'  type="email" placeholder="Email Address" className="input input-bordered w-full " />
+            <input naem='name' type="text" defaultValue={user?.displayName} className="input input-bordered w-full " />
+            <input name='email'  type="email" defaultValue={user?.email} disabled className="input input-bordered w-full " />
             <input name='phone' type="text" placeholder="Phone number" className="input input-bordered w-full " />
             <input className='btn btn-accent w-full' type="submit" value="Submit" />
             </form>

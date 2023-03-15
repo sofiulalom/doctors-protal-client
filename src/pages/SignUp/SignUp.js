@@ -1,19 +1,28 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/Authprovider';
 import ContenewWithGoogle from './ContinewWithGoogle/ContenewWithGoogle';
 
 const SignUp = () => {
     const {register,formState:{errors}, handleSubmit}=useForm();
-    const { createSignUp}=useContext(AuthContext)
+    const { createSignUp, UpdataeuserProfiele}=useContext(AuthContext)
     const  [loginError, setLoginError]=useState();
+    const navigate=useNavigate();
     const handleSignUp=data=>{
          console.log(data)
          createSignUp(data.email, data.password)
          .then(result=> {
             const user=result.user;
             console.log(user)
+            const userinfo={
+                displayName: data.name
+            }
+            UpdataeuserProfiele(userinfo)
+            .then(()=> {
+                navigate('/')
+            } )
+            .catch(e => console.log(e))
          })
          .catch(e => {
             console.log(e)
@@ -31,7 +40,7 @@ const SignUp = () => {
             <label className="label">
                 <span className="label-text text-xl">Your Name</span>
             </label>
-                <input type="text" {...register("Name", {required: "Email Address is required"})} placeholder="Name" className="input input-bordered w-full" />
+                <input type="text" {...register("name", {required: "Email Address is required"})} placeholder="Name" className="input input-bordered w-full" />
             <label className="label">
                 <span className="label-text text-xl">Your Email</span>
             </label>

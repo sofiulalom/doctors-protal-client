@@ -8,7 +8,7 @@ import ContactUs from './ContactUs/ContactUs';
 
 const Home = () => {
     return (
-        <div className='mx-5'>
+        <div className='mx-5 bg-white dark:bg-black'>
             <Banner></Banner>
             <Infocards></Infocards>
             <Services></Services>

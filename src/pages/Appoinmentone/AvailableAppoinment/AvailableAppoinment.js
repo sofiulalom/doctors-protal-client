@@ -1,19 +1,33 @@
+import { async } from '@firebase/util';
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import Lowadig from '../../Shards/footer/Lowading/Lowadig';
 import AppoinmentOption from '../ApponinmentOption/AppoinmentOption';
 import BookingModal from '../BookingModal/BookingModal';
 
 const AvailableAppoinment = ({selectedDate}) => {
-    const [appoinmentoption, setAppoinmentoption]=useState([]);
+    
     const [tritment, setTritMent]=useState(null)
-    useEffect(()=>{
-          fetch(`appoinmentOption.json`)
-          .then(res => res.json())
-          .then(data => {
-            
-            setAppoinmentoption(data)
-        })
-    },[])
+    const date = format(selectedDate, 'PP')
+    
+    const { data: appoinmentoption = [], refetch, isLoading}= useQuery({
+         queryKey: ['appoinmentOption', date],
+         queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/appoinmentOption?date=${date}`)
+            const data = await res.json();
+            return data; 
+         }
+    });
+    if(isLoading){
+        return <Lowadig></Lowadig>
+    }
+    
+    
+    
+    
+     
+   
     return (
         <section className='my-16'>
             <p className='text-center lg:text-2xl text-secondary font-bold text-xl'>Available Services on {format(selectedDate, 'PP')}</p>
@@ -31,6 +45,7 @@ const AvailableAppoinment = ({selectedDate}) => {
                     <BookingModal
                     setTritMent={setTritMent}
                     selectedDate={selectedDate}
+                    refetch={refetch}
                 tritment={tritment}
                 ></BookingModal>}
          
