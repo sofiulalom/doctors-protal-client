@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../AuthProvider/Authprovider';
 
 const BookingModal = ({tritment,selectedDate ,setTritMent, refetch}) => {
@@ -13,6 +14,7 @@ const BookingModal = ({tritment,selectedDate ,setTritMent, refetch}) => {
          const name=form.name.value;
          const email=form.email.value;
          const phone =form.phone.value;
+        
 
           const booking ={
             appoinmentDate: date,
@@ -23,7 +25,7 @@ const BookingModal = ({tritment,selectedDate ,setTritMent, refetch}) => {
             phone,
           }
   
-
+        console.log(booking)
          fetch('http://localhost:5000/bookings', {
           method: 'POST',
           headers:{
@@ -35,11 +37,14 @@ const BookingModal = ({tritment,selectedDate ,setTritMent, refetch}) => {
          .then(res => res.json())
         .then(data => {
           console.log(data)
-        if(data.acknowledged === true){
+        if(data.acknowledged){
  
           setTritMent(null)
-          alert('success confirmd')
+          toast.success('Successfully confirmd!')
+          
           refetch()
+        }else{
+            toast.error(data.message)
         }
         })
          
@@ -64,7 +69,9 @@ const BookingModal = ({tritment,selectedDate ,setTritMent, refetch}) => {
             </select>
             <input naem='name' type="text" defaultValue={user?.displayName} className="input input-bordered w-full " />
             <input name='email'  type="email" defaultValue={user?.email} disabled className="input input-bordered w-full " />
-            <input name='phone' type="text" placeholder="Phone number" className="input input-bordered w-full " />
+            <input name='name'  type="text"  defaultValue={user?.displayName}className="input input-bordered w-full " />
+            <input name='phone'  type="text" placeholder='name' className="input input-bordered w-full " />
+            
             <input className='btn btn-accent w-full' type="submit" value="Submit" />
             </form>
         </div>
