@@ -1,16 +1,25 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useToken from '../../hocke/useToken';
 import { AuthContext } from '../AuthProvider/Authprovider';
 import ContenewWithGoogle from '../SignUp/ContinewWithGoogle/ContenewWithGoogle';
 
 const Login = () => {
     const { register,formState:{errors}, handleSubmit }=useForm();
     const {LoginUser}=useContext(AuthContext)
-    const  [loginError, setLoginError]=useState();
+    const  [loginError, setLoginError]=useState('');
+    const  [loginUserEmail, setLoginUserEmail]=useState('');
+    const [token]=useToken(loginUserEmail)
     const location=useLocation()
     const navigate= useNavigate();
-    const from =location?.state?.from?.pathNmae || '/'
+    const from = location.state?.from?.pathname || '/';
+
+     if(token){
+        navigate(from,{replace:true})
+     }
+
+
     const handleLogin=(data)=>{
 
         console.log(data)
@@ -18,8 +27,8 @@ const Login = () => {
          .then(result => {
             const user=result.user;
             console.log(user)
+            setLoginUserEmail(data.email)
             
-            navigate(from, {replace:true})
          })
          .catch(e => {
             console.error(e)

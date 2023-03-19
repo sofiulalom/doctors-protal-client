@@ -1,8 +1,12 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import useAdmin from '../../hocke/useAdmin';
+import { AuthContext } from '../../pages/AuthProvider/Authprovider';
 import Nabver from '../../pages/Home/Nabver/Nabver';
 
 const DashBowrdLeayOut = () => {
+    const {user}=useContext(AuthContext);
+    const [isAdmin]=useAdmin(user?.email)
     return (
         <div>
             <Nabver></Nabver>
@@ -10,15 +14,21 @@ const DashBowrdLeayOut = () => {
             <input id="dashBowrd-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
                 <Outlet></Outlet>
-                {/* <label htmlFor="dashBowrd-drawer" className="btn btn-primary drawer-button lg:hidden">Open drawer</label> */}
+                
             
             </div> 
             <div className="drawer-side">
                 <label htmlFor="dashBowrd-drawer" className="drawer-overlay"></label> 
                 <ul className="menu p-4 w-80 bg-base-100 text-base-content">
                 
-                <li><a>Sidebar Item 1</a></li>
-                <li><a>Sidebar Item 2</a></li>
+                <li><Link to='/dashbowrd'>My Appoinment</Link></li>
+                { isAdmin && <>
+                
+                    <li><Link to='/dashbowrd/allusers'>All Users</Link></li>
+                </>
+
+               }
+                
                 </ul>
             
             </div>

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import useToken from '../../hocke/useToken';
 import { AuthContext } from '../AuthProvider/Authprovider';
 import ContenewWithGoogle from './ContinewWithGoogle/ContenewWithGoogle';
 
@@ -8,7 +9,13 @@ const SignUp = () => {
     const {register,formState:{errors}, handleSubmit}=useForm();
     const { createSignUp, UpdataeuserProfiele}=useContext(AuthContext)
     const  [loginError, setLoginError]=useState();
+    const [createUserEmail,setCreateUserEmail]=useState('')
+    const  [token]=useToken(createUserEmail);
     const navigate=useNavigate();
+
+    if(token){
+        navigate('/')
+    }
     const handleSignUp=data=>{
          console.log(data)
          createSignUp(data.email, data.password)
@@ -20,17 +27,38 @@ const SignUp = () => {
             }
             UpdataeuserProfiele(userinfo)
             .then(()=> {
-                navigate('/')
+                seveduser(data.name, data.email)
+               
             } )
             .catch(e => console.log(e))
          })
          .catch(e => {
             console.log(e)
             setLoginError(e.message)
+           
         
         })
+      
 
     }
+    const seveduser= (name, email)=>{
+         const user={name, email}
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers:{
+                'content-type' : 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            setCreateUserEmail(email)
+            
+           
+        })
+    }
+    
     return (
         <div className='w-4/12 m-auto p-5 mt-44 shadow-2xl'>
         <div className=' '>

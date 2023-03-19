@@ -7,9 +7,11 @@ import Main from '../../leayOut/Main/Main';
 import AppoinmentOne from '../../pages/Appoinmentone/AppoinmentOne/AppoinmentOne';
 import Home from '../../pages/Home/Home/Home';
 import Login from '../../pages/Login/Login';
+import AllUsers from '../../pages/Shards/AllUsers/AllUsers';
 import Myappoinment from '../../pages/Shards/footer/dhasebord/Myappoinment/Myappoinment';
 
 import SignUp from '../../pages/SignUp/SignUp';
+import AdminRoute from '../AdminRoute/AdminRoute';
 import PribateRoute from '../PribateRoute/PribateRoute';
 export const router=createBrowserRouter([
     {
@@ -40,6 +42,11 @@ export const router=createBrowserRouter([
         {
             path:'/dashbowrd',
             element: <Myappoinment></Myappoinment>,
+        },
+        {
+            path:'/dashbowrd/allusers',
+            element: <AdminRoute><AllUsers></AllUsers> </AdminRoute>,
+           
         }
       ]
     }

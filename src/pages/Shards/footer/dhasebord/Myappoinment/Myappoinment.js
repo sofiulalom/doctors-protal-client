@@ -4,19 +4,27 @@ import { AuthContext } from '../../../../AuthProvider/Authprovider';
 
 const Myappoinment = () => {
     const {user}=useContext(AuthContext)
-    const url=`http://localhost:5000/bookings?email=${user?.email}`
-    const {data: bookings= []}=useQuery({
+    
+    const url=`http://localhost:5000/bookings?email=${user?.email}`;
+    const {data: bookings = []}=useQuery({
          queryKey: ['bookings', user?.email],
          queryFn: async ()=> {
-            const res = await fetch(url)
+            const res = await fetch(url,{
+                headers:{
+                    authorization:  `Berare ${localStorage.getItem('accessToken')}`
+                }
+            })
             const data = await res.json()
             return data ;
          } 
+        
     })
     return (
         <div className=''>
             <h1 className='text-2xl mt-5 font-bold'>MyAppoinment</h1>
+            
             <div className="overflow-x-auto mt-2">
+            
             <table className="table w-full">
                 {/* head */}
                 <thead>
@@ -26,19 +34,20 @@ const Myappoinment = () => {
                     <th>Treitment</th>
                     <th>Date</th>
                     <th>Time</th>
+                    
                 </tr>
                 </thead>
                 <tbody>
-                {/* row 1 */}
-                 {
-                    bookings.map((booking, i) => <tr className='hover'>
+                
+                  {
+                    bookings?.map((booking, i) => <tr className='hover'>
                         <th>{i+1}</th>
                         <td>{booking.patient}</td>
                         <td>{booking.tritmantName}</td>
                         <td>{booking.appoinmentDate}</td>
                         <td>{booking.slot}</td>
                     </tr>)
-                 }
+                 } 
                 </tbody>
             </table>
             </div>
