@@ -3,7 +3,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 
 const AllUsers = () => {
-    const {data: users= []}=useQuery({
+    const {data: users= [], refetch}=useQuery({
         queryKey: ['users'],
         queryFn: async ()=>{
             const res = await fetch(`http://localhost:5000/users`)
@@ -15,15 +15,16 @@ const AllUsers = () => {
         fetch(`http://localhost:5000/users/admin/${id}`, {
             method: 'PUT',
             headers:{
-              authorization: `Berare ${localStorage.getItem('accessToken')}`
-              
+                authorization: `berare ${localStorage.getItem('accessToken')}`
             }
+            
         })
         .then(res => res.json())
         .then( data=> {
             console.log(data);
             if(data.modifiedCount > 0){
                 toast.success('Mack admin successfull')
+                refetch();
             }
         })
     }
@@ -45,7 +46,7 @@ const AllUsers = () => {
                 <tbody>
                
                 {
-                    users.map((user, i) => <tr key={user._id} className="hover">
+                    users?.map((user, i) => <tr key={user._id} className="hover">
                     <th>{i+1}</th>
                     <td>{user.name}</td>
                     <td>{user.email}</td>

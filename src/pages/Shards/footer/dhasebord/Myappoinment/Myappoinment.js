@@ -11,7 +11,7 @@ const Myappoinment = () => {
          queryFn: async ()=> {
             const res = await fetch(url,{
                 headers:{
-                    authorization:  `Berare ${localStorage.getItem('accessToken')}`
+                    authorization: `berare ${localStorage.getItem('accessToken')}`
                 }
             })
             const data = await res.json()
@@ -39,14 +39,14 @@ const Myappoinment = () => {
                 </thead>
                 <tbody>
                 
-                  {
+                  { bookings &&
                     bookings?.map((booking, i) => <tr className='hover'>
-                        <th>{i+1}</th>
-                        <td>{booking.patient}</td>
-                        <td>{booking.tritmantName}</td>
-                        <td>{booking.appoinmentDate}</td>
-                        <td>{booking.slot}</td>
-                    </tr>)
+                    <th>{i+1}</th>
+                    <td>{booking.patient}</td>
+                    <td>{booking.tritmantName}</td>
+                    <td>{booking.appoinmentDate}</td>
+                    <td>{booking.slot}</td>
+                </tr>)
                  } 
                 </tbody>
             </table>

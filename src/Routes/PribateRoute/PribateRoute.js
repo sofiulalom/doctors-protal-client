@@ -6,7 +6,7 @@ const PribateRoute = ({children}) => {
     const {user,lowading}=useContext(AuthContext)
     const location=useLocation()
     if(lowading){
-        <progress className="progress w-56"></progress>
+       return <progress className="progress w-56"></progress>
     }
     if(user){
         return children;

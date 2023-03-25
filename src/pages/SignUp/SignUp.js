@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import useToken from '../../hocke/useToken';
 import { AuthContext } from '../AuthProvider/Authprovider';
@@ -8,26 +9,29 @@ import ContenewWithGoogle from './ContinewWithGoogle/ContenewWithGoogle';
 const SignUp = () => {
     const {register,formState:{errors}, handleSubmit}=useForm();
     const { createSignUp, UpdataeuserProfiele}=useContext(AuthContext)
-    const  [loginError, setLoginError]=useState();
-    const [createUserEmail,setCreateUserEmail]=useState('')
+    const  [loginError, setLoginError]=useState('');
+     const [createUserEmail,setCreateUserEmail]=useState('')
     const  [token]=useToken(createUserEmail);
     const navigate=useNavigate();
 
-    if(token){
-        navigate('/')
-    }
+     if(token){
+         navigate('/')
+     }
     const handleSignUp=data=>{
-         console.log(data)
+        
          createSignUp(data.email, data.password)
          .then(result=> {
             const user=result.user;
             console.log(user)
+             toast.success('user create successful')
             const userinfo={
                 displayName: data.name
             }
             UpdataeuserProfiele(userinfo)
             .then(()=> {
-                seveduser(data.name, data.email)
+                console.log(data.name, data.email)
+               seveduser(data.name , data.email)
+                 navigate('/')
                
             } )
             .catch(e => console.log(e))
@@ -53,7 +57,8 @@ const SignUp = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            setCreateUserEmail(email)
+           setCreateUserEmail(email)
+            
             
            
         })

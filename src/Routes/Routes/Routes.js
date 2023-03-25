@@ -7,6 +7,7 @@ import Main from '../../leayOut/Main/Main';
 import AppoinmentOne from '../../pages/Appoinmentone/AppoinmentOne/AppoinmentOne';
 import Home from '../../pages/Home/Home/Home';
 import Login from '../../pages/Login/Login';
+import AddDoctors from '../../pages/Shards/AddDoctors/AddDoctors';
 import AllUsers from '../../pages/Shards/AllUsers/AllUsers';
 import Myappoinment from '../../pages/Shards/footer/dhasebord/Myappoinment/Myappoinment';
 
@@ -45,7 +46,12 @@ export const router=createBrowserRouter([
         },
         {
             path:'/dashbowrd/allusers',
-            element: <AdminRoute><AllUsers></AllUsers> </AdminRoute>,
+            element: <AdminRoute><AllUsers></AllUsers></AdminRoute> ,
+           
+        },
+        {
+            path:'/dashbowrd/addDoctors',
+            element: <AddDoctors></AddDoctors>,
            
         }
       ]

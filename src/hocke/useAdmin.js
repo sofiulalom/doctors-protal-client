@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 const  useAdmin=email=>{
      const [isAdmin, setIsAdmin]=useState(false)
-     const [isAdminLowading, setIsAdminlowading]=useState(true)
+     const [isAdminLowading, setIsAdminLowading]=useState(true)
      useEffect(()=>{
         if(email){
             fetch(`http://localhost:5000/users/admin/${email}`)
@@ -10,7 +10,7 @@ const  useAdmin=email=>{
             .then(data =>{
                 console.log(data);
                 setIsAdmin(data.isAdmin)
-                setIsAdminlowading(false)
+                setIsAdminLowading(false)
             })
             
         }

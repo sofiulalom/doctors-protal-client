@@ -23,11 +23,12 @@ const DashBowrdLeayOut = () => {
                 
                 <li><Link to='/dashbowrd'>My Appoinment</Link></li>
                 { isAdmin && <>
-                
-                    <li><Link to='/dashbowrd/allusers'>All Users</Link></li>
+                    <li><Link to='/dashbowrd/allusers'>All users</Link></li>
                 </>
-
-               }
+                    
+                 }
+                
+               
                 
                 </ul>
             

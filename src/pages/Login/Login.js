@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
+import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useToken from '../../hocke/useToken';
 import { AuthContext } from '../AuthProvider/Authprovider';
@@ -8,8 +9,8 @@ import ContenewWithGoogle from '../SignUp/ContinewWithGoogle/ContenewWithGoogle'
 const Login = () => {
     const { register,formState:{errors}, handleSubmit }=useForm();
     const {LoginUser}=useContext(AuthContext)
-    const  [loginError, setLoginError]=useState('');
-    const  [loginUserEmail, setLoginUserEmail]=useState('');
+    const  [loginError, setLoginError]=useState();
+    const  [loginUserEmail, setLoginUserEmail]=useState();
     const [token]=useToken(loginUserEmail)
     const location=useLocation()
     const navigate= useNavigate();
@@ -28,6 +29,7 @@ const Login = () => {
             const user=result.user;
             console.log(user)
             setLoginUserEmail(data.email)
+            toast.success("Login successfully")
             
          })
          .catch(e => {
