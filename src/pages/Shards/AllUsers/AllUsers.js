@@ -51,8 +51,8 @@ const AllUsers = () => {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{ user?.role !== 'admin' && 
-                        <button onClick={()=> handleMackAdmin(user._id)} className='btn btn-xs btn-outline'>Mack Admin</button>}</td>
-                    <td><button className='btn btn-xs btn-outline'>Delete</button></td>
+                        <button onClick={()=> handleMackAdmin(user._id)} className='btn btn-xs btn-outline btn-success'>Mack Admin</button>}</td>
+                    <td><button className='btn btn-xs btn-outline btn-error'>Delete</button></td>
                 </tr>)
                 }
                 

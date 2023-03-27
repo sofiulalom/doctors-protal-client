@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddDoctors = () => {
     const {register,formState:{errors}, handleSubmit}=useForm();
+    const navigate=useNavigate()
     const ImageHostKey=process.env.REACT_APP_Imagebb_key;
    
     const {data: specialtes=[]}=useQuery({
@@ -21,7 +24,7 @@ const AddDoctors = () => {
         const formData=new FormData();
         formData.append('image', image)
         
-        fetch(`https://api.imgbb.com/1/upload?expiration=600&key=${ImageHostKey}}`,{
+        fetch(`https://api.imgbb.com/1/upload?key=${ImageHostKey}`,{
             method: 'post',
             body: formData,
         })
@@ -48,6 +51,10 @@ const AddDoctors = () => {
             .then(res=> res.json())
             .then(result =>{
                 console.log(result)
+                if(result.acknowledged > 0){
+                    toast.success(`${data.name} is added successfully`)
+                }
+                navigate('/dashbowrd/manegedoctor')
             })
             
         })

@@ -9,6 +9,7 @@ import Home from '../../pages/Home/Home/Home';
 import Login from '../../pages/Login/Login';
 import AddDoctors from '../../pages/Shards/AddDoctors/AddDoctors';
 import AllUsers from '../../pages/Shards/AllUsers/AllUsers';
+import ManegeDoctor from '../../pages/Shards/footer/dhasebord/ManegeDoctor/ManegeDoctor';
 import Myappoinment from '../../pages/Shards/footer/dhasebord/Myappoinment/Myappoinment';
 
 import SignUp from '../../pages/SignUp/SignUp';
@@ -51,9 +52,14 @@ export const router=createBrowserRouter([
         },
         {
             path:'/dashbowrd/addDoctors',
-            element: <AddDoctors></AddDoctors>,
+            element: <AdminRoute><AddDoctors></AddDoctors></AdminRoute>,
            
-        }
+        },
+        {
+            path:'/dashbowrd/manegedoctor',
+            element: <AdminRoute><ManegeDoctor></ManegeDoctor></AdminRoute>,
+           
+        },
       ]
     }
 ])
