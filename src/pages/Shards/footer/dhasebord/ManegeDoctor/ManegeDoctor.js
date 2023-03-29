@@ -1,8 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import ConfiremationModal from '../../../ConfiremationModal/ConfiremationModal';
 
 const ManegeDoctor = () => {
-    const {data: doctors=[]}=useQuery({
+    const [deletingDoctor, setDeletingDoctor]=useState(null)
+    const closedModal=()=>{
+        setDeletingDoctor(null)
+    }
+    const {data: doctors=[], refetch}=useQuery({
         queryKey: ['mangedoctors'],
         queryFn: async ()=> {
            try{
@@ -19,7 +25,27 @@ const ManegeDoctor = () => {
            }
         
         }
-    })
+    });
+
+
+    const handleDoctorDelete= doctor =>{
+       fetch(`http://localhost:5000/doctors/${doctor._id}`, {
+        method: 'DELETE',
+        headers:{
+            authorization: `Berare ${localStorage.getItem('accessToken')}`
+        }
+       })
+       .then(res => res.json())
+       .then(data => {
+        
+        if(data.deletedCount > 0){
+            refetch();
+            toast.success(`Doctor ${doctor.name} deleted successfully`)
+            
+        }
+        
+       })
+    }
     return (
         <div>
             <h1 className="text-4xl">Manage Doctor</h1>
@@ -49,7 +75,10 @@ const ManegeDoctor = () => {
                     <td>{doctor.name}</td>
                     <td>{doctor.email}</td>
                     <td>{doctor.specialty}</td>
-                    <td><button className='btn btn-outline btn-error'>Delete</button></td>
+                    <td>
+                    <label onClick={()=> setDeletingDoctor(doctor)}
+                     htmlFor="Confiremation-modal" className="btn btn-outline btn-error">Delete</label>
+                    </td>
                 </tr> )
                   }
                 
@@ -58,6 +87,18 @@ const ManegeDoctor = () => {
                 </tbody>
             </table>
             </div>
+            {
+            deletingDoctor && <ConfiremationModal
+              title={`Are you sure want to delete? `}
+              message={`if you delete ${deletingDoctor.name}. It cannot be undone`}
+              successAction={handleDoctorDelete}
+              successDelete="DELETE"
+              modalData={deletingDoctor}
+              closedModal={closedModal}
+              
+              >
+              </ConfiremationModal>
+            }
         </div>
     );
 };
