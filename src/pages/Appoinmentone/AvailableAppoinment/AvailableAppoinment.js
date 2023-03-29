@@ -14,7 +14,7 @@ const AvailableAppoinment = ({selectedDate}) => {
     const { data: appoinmentoption = [], refetch, isLoading}= useQuery({
          queryKey: ['appoinmentOption', date],
          queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/appoinmentOption?date=${date}`)
+            const res = await fetch(`http://localhost:5000/v3/appointmentOptions?date=${date}`)
             const data = await res.json();
             return data; 
          }
