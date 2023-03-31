@@ -5,7 +5,7 @@ import { AuthContext } from '../../AuthProvider/Authprovider';
 
 const BookingModal = ({tritment,selectedDate ,setTritMent, refetch}) => {
     const {user}=useContext(AuthContext)
-    const { name:tritmantName  ,slots}=tritment;
+    const { name:tritmantName,price ,slots}=tritment;
     const date =format(selectedDate, 'PP');
     const handleBooking=event=> {
          event.preventDefault();
@@ -22,6 +22,7 @@ const BookingModal = ({tritment,selectedDate ,setTritMent, refetch}) => {
             patient: name,
             email,
             slot,
+            price,
             phone,
           }
   
